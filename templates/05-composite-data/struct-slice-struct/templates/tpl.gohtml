@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Places I have Lived</title>
+    </head>
+
+    <body>
+        <h1>Places I have Lived</h1>
+        <ul>
+           {{range .Locations}}
+               <li>
+                   {{.State}} - {{.City}}
+               </li>
+            {{end}}
+        </ul>
+        <h1>Cars I have Owned</h1>
+        <ul>
+            {{range .Cars}}
+                <li>
+                    {{.Make}} - {{.Model}}
+                </li>
+            {{end}}
+        </ul>
+    </body>
+</html>
