@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+    {{template "header"}}
+    <body>
+        {{.}}
+        {{.Name}}
+        {{.Age}}
+        {{.DoubleAge}}
+        {{.SomeProcessing}}
+
+        {{/* Have to pipe an int into the method */}}
+        {{.Age | .TakesArg}}
+    </body>
+    {{template "footer"}}
+</html>

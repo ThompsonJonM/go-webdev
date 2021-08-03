@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    {{template "header"}}
+    <body>
+        <ul>
+            {{.Fall.Term}}
+            {{range .Fall.Courses}}
+                <li>
+                    {{.Number}}
+                    {{.Name}}
+                    {{.Units}}
+                </li>
+            {{end}}
+        </ul>
+        {{.Spring}}
+        {{.Summer}}
+    </body>
+    {{template "footer"}}
+</html>
