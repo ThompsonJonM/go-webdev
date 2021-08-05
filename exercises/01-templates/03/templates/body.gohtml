@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    restaurant {
+        Menu {
+            Type
+            Items {
+                Name
+                Price
+        Menu {
+            Type
+            Items {
+                Name
+                Price
+        Menu {
+            Type
+            Items {
+                Name
+                Price
+    <body>
+        <div>
+            {{.Breakfast.Type}}
+            <ul>
+                {{range .Breakfast.Items}}
+                    <li>
+                        {{.Name}}
+                        {{.Price}}
+                    </li>
+                {{end}}
+            </ul>
+        </div>
+
+        <div>
+            {{.Lunch.Type}}
+            <ul>
+                {{range .Lunch.Items}}
+                    <li>
+                        {{.Name}}
+                        {{.Price}}
+                    </li>
+                {{end}}
+            </ul>
+        </div>
+
+        <div>
+            {{.Dinner.Type}}
+            <ul>
+                {{range .Dinner.Items}}
+                    <li>
+                        {{.Name}}
+                        {{.Price}}
+                    </li>
+                {{end}}
+            </ul>
+        </div>
+    </body>
+</html>

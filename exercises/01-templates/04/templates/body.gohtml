@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    restaurants {
+            Name
+            Menu {
+                Type
+                Items {
+                    Name
+                    Price
+            Menu {
+                Type
+                Items {
+                    Name
+                    Price
+            Menu {
+                Type
+                Items {
+                    Name
+                    Price
+    <body>
+        {{range .}}
+        <div>
+            {{.Name}}
+            {{range .Menus}}
+            <div>
+                {{.Type}}
+                <ul>
+                    {{range .Items}}
+                    <li>
+                        {{.Name}}
+                        {{.Price}}
+                    </li>
+                    {{end}}
+                </ul>
+            </div>
+            {{end}}
+        </div>
+        {{end}}
+    </body>
+</html>

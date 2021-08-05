@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    // Region {
+        Location
+        Hotels {
+            Name
+            Address
+            City
+            Zip
+
+    <body>
+        {{range .}}
+            <ul>
+                {{.Location}}
+                {{range .Hotels}}
+                    <li>
+                        {{.Name}}
+                        {{.Address}}
+                        {{.City}}
+                        {{.Zip}}
+                    </li>
+                {{end}}
+            </ul>
+        {{end}}
+    </body>
+</html>
