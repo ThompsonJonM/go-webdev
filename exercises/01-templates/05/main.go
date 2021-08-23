@@ -9,60 +9,60 @@ import (
 	"time"
 )
 
-var tpl *template.Template
-
 type record struct {
 	Date time.Time
 	Open float64
 }
 
+var tpl *template.Template
+
 func init() {
-	tpl = template.Must(template.ParseGlob("templates/**"))
+	tpl = template.Must(template.ParseGlob("templates/body.gohtml"))
 }
 
 func main() {
-	data := prs("table.csv")
-	err := tpl.ExecuteTemplate(os.Stdout, "body.gohtml", data)
-	if err != nil {
-		log.Fatalln("Cannot execute template", err)
-	}
-}
-
-func prs(f string) []record {
-	src, err := os.Open(f)
+	f, err := os.Open("table.csv")
 	if err != nil {
 		log.Fatalln("Could not open file", err)
 	}
-	defer func(src *os.File) {
-		err := src.Close()
+
+	defer func(f *os.File) {
+		err := f.Close()
 		if err != nil {
 			log.Fatalln("Could not close file", err)
 		}
-	}(src)
+	}(f)
 
-	rdr := csv.NewReader(src)
-	rec, err := rdr.ReadAll()
+	r := csv.NewReader(f)
+	rs, err := r.ReadAll()
 	if err != nil {
-		log.Fatalln("Could not read file", err)
+		log.Fatalln("Could not read records", err)
 	}
 
-	var r record
 	var recs []record
-
-	for i, v := range rec {
+	for i, rec := range rs {
 		if i == 0 {
 			continue
 		}
 
-		date, _ := time.Parse("2006-01-02", v[0])
-		open, _ := strconv.ParseFloat(v[1], 64)
-		r = record{
-			Date: date,
-			Open: open,
+		d, err := time.Parse("2006-01-02", rec[0])
+		if err != nil {
+			log.Fatalln("Could not parse date", err)
 		}
 
-		recs = append(recs, r)
+		f, err := strconv.ParseFloat(rec[1], 64)
+		if err != nil {
+			log.Fatalln("Could not parse float", err)
+		}
+
+		recs = append(recs, record{
+			Date: d,
+			Open: f,
+		})
 	}
 
-	return recs
+	err = tpl.Execute(os.Stdout, recs)
+	if err != nil {
+		log.Fatalln("Cannot execute file", err)
+	}
 }
