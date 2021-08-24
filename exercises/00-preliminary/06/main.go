@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 )
 
 type Problem struct {
@@ -14,7 +15,18 @@ type Problem struct {
 
 func main() {
 	ps := importProblems()
-	var c, inc int
+	var c, i int
+	t := 30
+
+	go func() {
+		for range time.Tick(time.Second) {
+			t--
+
+			if t == 0 {
+				log.Fatalf("Time is up! You answered %d correctly and %d incorrectly\n", c, i)
+			}
+		}
+	}()
 
 	for _, v := range ps {
 		var ipt string
@@ -26,13 +38,14 @@ func main() {
 
 		if ipt != v.Solution {
 			fmt.Printf("Incorrect. The correct answer is: %s\n", v.Solution)
-			inc++
+			i++
 		} else {
 			fmt.Println("Correct!")
 			c++
 		}
 	}
-	fmt.Printf("You answered %d correctly and %d incorrectly\n", c, inc)
+
+	fmt.Printf("You answered %d correctly and %d incorrectly\n", c, i)
 }
 
 func importProblems() []Problem {
