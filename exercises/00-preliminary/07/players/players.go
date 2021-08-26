@@ -11,10 +11,10 @@ type Player struct {
 	Email string
 }
 
-func ImportPlayers() []Player {
+func ImportPlayers(file string) []Player {
 	var ps []Player
 
-	f, err := os.Open("players.csv")
+	f, err := os.Open(file)
 	if err != nil {
 		log.Fatalln("Could not open file", err)
 	}
