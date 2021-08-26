@@ -21,12 +21,10 @@ func getMessageString(fromEmail, To, Subject, emailBody string) []byte {
 	return []byte("From: " + fromEmail + "\r\n" + "To: " + To + "\r\n" + "Subject: " + Subject + "\r\n" + "MIME-Version: 1.0\r\n" + "Content-Type: text/html; charset=\"utf-8\"\r\n\r\n" + emailBody + "\r\n")
 }
 
-func SendEmail(file, body string) {
+func SendEmail(from, pass, file, body string) {
 	ps := players.ImportPlayers(file)
 
 	for _, v := range ps {
-		from := ""
-		pass := ""
 		to := []string{
 			v.Email,
 		}
