@@ -1,4 +1,4 @@
-package importPlayers
+package players
 
 import (
 	"encoding/csv"

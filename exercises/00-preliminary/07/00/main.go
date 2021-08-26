@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/ThompsonJonM/go-webdev/exercises/00-preliminary/07/importPlayers"
+	"github.com/ThompsonJonM/go-webdev/exercises/00-preliminary/07/players"
 	"log"
 	"net/smtp"
 )
@@ -17,9 +17,9 @@ func (s *smtpServer) Address() string {
 }
 
 func main() {
-	players := ImportPlayers()
+	ps := players.ImportPlayers()
 
-	for _, v := range players {
+	for _, v := range ps {
 		from := ""
 		pass := ""
 		to := []string{

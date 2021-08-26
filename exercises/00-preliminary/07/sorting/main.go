@@ -2,18 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/ThompsonJonM/go-webdev/exercises/00-preliminary/07/importPlayers"
+	"github.com/ThompsonJonM/go-webdev/exercises/00-preliminary/07/players"
 	"math/rand"
 	"time"
 )
 
-type Player struct {
-	Name  string
-	Email string
-}
-
 func main() {
-	ps := ImportPlayers()
+	ps := players.ImportPlayers()
 
 	rand.Seed(time.Now().UnixNano())
 	rand.Shuffle(len(ps), func(i, j int) {
