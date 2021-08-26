@@ -23,5 +23,5 @@ League rules are the following:
 <b>This is an automated e-mail created using Go</b>.
 </body></html>
 `
-	email.SendEmail("", "", "", b)
+	email.SendEmail("", "", "", "", b)
 }
