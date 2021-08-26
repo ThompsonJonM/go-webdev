@@ -1,17 +1,11 @@
 package main
 
 import (
-	"encoding/csv"
 	"fmt"
+	"github.com/ThompsonJonM/go-webdev/exercises/00-preliminary/07/importPlayers"
 	"log"
 	"net/smtp"
-	"os"
 )
-
-type Player struct {
-	Name  string
-	Email string
-}
 
 type smtpServer struct {
 	host string
@@ -23,7 +17,7 @@ func (s *smtpServer) Address() string {
 }
 
 func main() {
-	players := importPlayers()
+	players := ImportPlayers()
 
 	for _, v := range players {
 		from := ""
@@ -54,28 +48,4 @@ This is an automated e-mail created using Go.
 
 		fmt.Println("Email sent.")
 	}
-}
-
-func importPlayers() []Player {
-	var ps []Player
-
-	f, err := os.Open("players.csv")
-	if err != nil {
-		log.Fatalln("Could not open file", err)
-	}
-
-	rdr := csv.NewReader(f)
-	rows, err := rdr.ReadAll()
-	if err != nil {
-		log.Fatalln("Could not read CSV", err)
-	}
-
-	for _, v := range rows {
-		ps = append(ps, Player{
-			Name:  v[0],
-			Email: v[1],
-		})
-	}
-
-	return ps
 }
