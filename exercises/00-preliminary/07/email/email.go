@@ -1,8 +1,10 @@
 package email
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/ThompsonJonM/go-webdev/exercises/00-preliminary/07/players"
+	"html/template"
 	"log"
 	"net/smtp"
 	"strings"
@@ -21,7 +23,19 @@ func getMessageString(fromEmail, To, Subject, emailBody string) []byte {
 	return []byte("From: " + fromEmail + "\r\n" + "To: " + To + "\r\n" + "Subject: " + Subject + "\r\n" + "MIME-Version: 1.0\r\n" + "Content-Type: text/html; charset=\"utf-8\"\r\n\r\n" + emailBody + "\r\n")
 }
 
-func SendEmail(from, pass, file, subject, body string) {
+func parseTemplate(templateName string, data interface{}) (string, error) {
+	t, err := template.ParseFiles(templateName)
+	if err != nil {
+		log.Fatalln("Could not parse template", err)
+	}
+	buf := new(bytes.Buffer)
+	if err = t.Execute(buf, data); err != nil {
+		return "", err
+	}
+	return buf.String(), nil
+}
+
+func SendEmail(from, pass, file, subject, template string) {
 	ps := players.ImportPlayers(file)
 
 	var i int
@@ -34,13 +48,17 @@ func SendEmail(from, pass, file, subject, body string) {
 		first := strings.Join(f[:1], "")
 
 		s := smtpServer{host: "smtp.gmail.com", port: "587"}
-		ms := fmt.Sprintf(body, first)
+		//ms := fmt.Sprintf(body, first)
+		ms, err := parseTemplate(template, first)
+		if err != nil {
+			log.Fatalln("Could not parse template", err)
+		}
 
 		b := getMessageString(from, to[0], subject, ms)
 
 		auth := smtp.PlainAuth("", from, pass, s.host)
 
-		err := smtp.SendMail(s.Address(), auth, from, to, b)
+		err = smtp.SendMail(s.Address(), auth, from, to, b)
 		if err != nil {
 			log.Fatalln("Could not send e-mail", err)
 		}
