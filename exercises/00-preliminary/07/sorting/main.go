@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	ps := players.ImportPlayers()
+	ps := players.ImportPlayers("../players.csv")
 
 	rand.Seed(time.Now().UnixNano())
 	rand.Shuffle(len(ps), func(i, j int) {
