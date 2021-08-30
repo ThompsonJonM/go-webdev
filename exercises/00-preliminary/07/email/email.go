@@ -48,7 +48,6 @@ func SendEmail(from, pass, file, subject, template string) {
 		first := strings.Join(f[:1], "")
 
 		s := smtpServer{host: "smtp.gmail.com", port: "587"}
-		//ms := fmt.Sprintf(body, first)
 		ms, err := parseTemplate(template, first)
 		if err != nil {
 			log.Fatalln("Could not parse template", err)
